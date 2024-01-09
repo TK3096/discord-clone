@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Open_Sans } from 'next/font/google'
 
 import { ThemeProvider } from '@/providers/theme-provider'
+import { ModalProvider } from '@/providers/modal-provider'
 
 import { cn } from '@/lib/utils'
 
@@ -30,6 +31,7 @@ const RootLayout = (props: RootLayoutProps) => {
           enableSystem={false}
           storageKey='discord-theme'
         >
+          <ModalProvider />
           {children}
         </ThemeProvider>
       </body>

@@ -8,14 +8,14 @@ import { ActionTooltip } from '@/components/common/action-tooltip'
 
 import { cn } from '@/lib/utils'
 
-const path = '/conversations'
-
 export const ConversationBtn = () => {
   const router = useRouter()
   const pathname = usePathname()
 
+  const index = pathname.indexOf('conversations')
+
   const onClick = () => {
-    router.push(`${path}`)
+    router.push(`/servers/conversations`)
   }
 
   return (
@@ -25,8 +25,8 @@ export const ConversationBtn = () => {
           <div
             className={cn(
               'absolute left-0 bg-primary w-[4px] rounded-r-full h-0 transition-all',
-              pathname === path && 'h-[38px]',
-              pathname !== path && 'group-hover:h-[20px]',
+              index > 0 && 'h-[38px]',
+              index < 0 && 'group-hover:h-[20px]',
             )}
           />
           <div className='relative overflow-hidden flex justify-center items-center mx-3 h-[48px] w-[48px] rounded-[24px] bg-background dark:bg-neutral-700 group-hover:bg-indigo-300 group-hover:dark:bg-indigo-500 group-hover:rounded-[16px] transition-all'>
