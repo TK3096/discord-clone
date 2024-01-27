@@ -1,9 +1,19 @@
-export const uploadFile = async (file: File) => {
-  const url = new Promise<string>((resolve) => {
-    setTimeout(() => {
-      resolve(URL.createObjectURL(file))
-    }, 2000)
-  })
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
-  return url
+import { storage } from '@/lib/firebase/config/firebase'
+
+export const uploadFile = async (file: File) => {
+  try {
+    const path = file.name
+    const fileRef = ref(storage, path)
+
+    await uploadBytes(fileRef, file)
+
+    const url = await getDownloadURL(fileRef)
+
+    return url
+  } catch (error) {
+    console.log('[STORAGE] Fail to upload file -> ', error)
+    return null
+  }
 }

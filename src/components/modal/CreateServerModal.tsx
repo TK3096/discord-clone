@@ -1,6 +1,11 @@
+'use client'
+
+import { useRouter } from 'next/navigation'
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+
+import { APIResponse } from '@/types'
 
 import { useModal } from '@/hooks/useModal'
 
@@ -24,7 +29,7 @@ import {
 } from '@/components/ui/form'
 import { FileUpload } from '@/components/common/FileUpload'
 
-const schema = z.object({
+export const schema = z.object({
   name: z.string().min(1, {
     message: 'Server name is required.',
   }),
@@ -33,7 +38,15 @@ const schema = z.object({
   }),
 })
 
-export const CreateServerModal = () => {
+interface CreateServerModalProps {
+  init?: boolean
+}
+
+export const CreateServerModal = (props: CreateServerModalProps) => {
+  const { init } = props
+
+  const router = useRouter()
+
   const { onClose, open, type } = useModal()
 
   const form = useForm({
@@ -44,15 +57,35 @@ export const CreateServerModal = () => {
     },
   })
 
-  const isOpen = open && type === 'createServer'
+  const isOpen = (open && type === 'createServer') || init
   const loading = form.formState.isSubmitting
 
-  const handleSubmitForm = (values: z.infer<typeof schema>) => {
-    console.log(values)
+  const handleSubmitForm = async (values: z.infer<typeof schema>) => {
+    try {
+      const response = await fetch('/api/servers', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      })
+
+      const resBody = (await response.json()) as unknown as APIResponse<string>
+
+      if (response.ok && resBody.success) {
+        router.refresh()
+      } else {
+        console.log(resBody)
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const handleClose = () => {
-    onClose()
+    if (!init) {
+      onClose()
+    }
   }
 
   return (

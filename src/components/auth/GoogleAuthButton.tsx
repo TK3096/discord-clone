@@ -1,11 +1,22 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { FaGoogle } from 'react-icons/fa6'
 
 import { Button } from '@/components/ui/button'
 
+import { signInWithGoogle } from '@/lib/firebase/auth'
+
 export const GoogleAuthButton = () => {
-  const handleClick = () => {}
+  const route = useRouter()
+
+  const handleClick = async () => {
+    const res = await signInWithGoogle()
+
+    if (res) {
+      route.refresh()
+    }
+  }
 
   return (
     <Button

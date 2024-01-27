@@ -12,7 +12,7 @@ const config = {
   ),
 }
 
-export const app = getApps().length
+export const app = !getApps().length
   ? initializeApp(config, 'discord-clone')
   : getApps()[0]
 
