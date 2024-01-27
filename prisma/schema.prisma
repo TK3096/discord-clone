@@ -7,4 +7,140 @@ datasource db {
   url = env("DATABASE_URL")
   relationMode = "prisma"
 }
-  
+
+model Profile {
+  id String @id @default(uuid())
+  uid String @unique()
+  name String @db.Text
+  imageUrl String @db.Text
+
+  servers Server[]
+  memebers Member[]
+  channels Channel[]
+  conversationsInitiated Conversation[] @relation("ProfileOne")
+  conversationsReceived Conversation[] @relation("ProfileTwo")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Server {
+  id String @id @default(uuid())
+  name String @db.Text
+  imageUrl String @db.Text
+  inviteCode String @unique
+
+  profileId String
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  members Member[]
+  channels Channel[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([profileId])
+}
+
+enum RoleMember {
+  ADMIN
+  MODERATOR
+  GUEST
+}
+
+model Member {
+  id String @id @default(uuid())
+  role RoleMember @default(GUEST)
+
+  profileId String
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  serverId String
+  server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  messages Message[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([profileId])
+  @@index([serverId])
+}
+
+enum ChannelType {
+  TEXT
+  AUDIO
+}
+
+model Channel {
+  id String @id @default(uuid())
+  name String @db.Text
+  type ChannelType @default(TEXT)
+
+  profileId String
+  profile Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  serverId String
+  server Server @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  messages Message[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([profileId])
+  @@index([serverId])
+}
+
+model Message {
+  id String @id @default(uuid())
+  content String @db.Text
+  fileUrl String? @db.Text
+
+  channelId String
+  channel Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
+
+  memeberId String
+  memeber Member @relation(fields: [memeberId], references: [id], onDelete: Cascade)
+
+  deleted Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([channelId])
+  @@index([memeberId])
+}
+
+model Conversation {
+  id String @id @default(uuid())
+
+  profileOneId String
+  profileOne Profile @relation("ProfileOne", fields: [profileOneId], references: [id], onDelete: Cascade)
+
+  profileTwoId String
+  profileTwo Profile @relation("ProfileTwo", fields: [profileTwoId], references: [id], onDelete: Cascade)
+
+  directMessages DirectMessage[]
+
+  @@index([profileOneId])
+  @@index([profileTwoId])
+
+  @@unique([profileOneId, profileTwoId])
+}
+
+model DirectMessage {
+  id String @id @default(uuid())
+  content String @db.Text
+  fileUrl String? @db.Text
+
+  conversationId String
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  deleted Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([conversationId])
+}
