@@ -19,7 +19,7 @@ export const AuthBox = () => {
         <CardDescription>select you sign in method</CardDescription>
       </CardHeader>
       <CardContent>
-        <Separator className='h-[3px] mb-5 bg-[#e1e2e5] dark:bg-[#292a2d]' />
+        <Separator className='h-[2px] w-3/4 mx-auto mb-5 bg-[#e1e2e5] dark:bg-neutral-700 rounded-full' />
         <div className='space-y-3'>
           <GoogleAuthButton />
         </div>
