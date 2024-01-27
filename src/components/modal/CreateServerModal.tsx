@@ -2,6 +2,8 @@ import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
+import { useModal } from '@/hooks/useModal'
+
 import {
   Dialog,
   DialogHeader,
@@ -32,6 +34,8 @@ const schema = z.object({
 })
 
 export const CreateServerModal = () => {
+  const { onClose, open, type } = useModal()
+
   const form = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -40,16 +44,19 @@ export const CreateServerModal = () => {
     },
   })
 
+  const isOpen = open && type === 'createServer'
   const loading = form.formState.isSubmitting
 
   const handleSubmitForm = (values: z.infer<typeof schema>) => {
     console.log(values)
   }
 
-  const handleClose = () => {}
+  const handleClose = () => {
+    onClose()
+  }
 
   return (
-    <Dialog onOpenChange={handleClose}>
+    <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className='bg-white text-black p-0 overflow-hidden'>
         <DialogHeader className='pt-8 px-6'>
           <DialogTitle className='text-2xl text-center font-bold'>
