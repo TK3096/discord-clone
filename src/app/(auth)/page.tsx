@@ -4,7 +4,7 @@ import { AuthBox } from '@/components/auth/AuthBox'
 
 import { isUserAuthenticated } from '@/lib/firebase/config/firebase-admin'
 
-import { initialProfile } from './actions'
+import { initialProfile } from '@/actions/auth'
 import { InitialModal } from '@/components/modal/InitialModal'
 
 const HomePage = async () => {

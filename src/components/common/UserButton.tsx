@@ -1,7 +1,7 @@
-'use cleint'
+'use client'
 
 import Image from 'next/image'
-import { UserRound } from 'lucide-react'
+import { UserRound, LogOut } from 'lucide-react'
 
 import {
   DropdownMenu,
@@ -10,8 +10,10 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
+import { useUser } from '@/hooks/useUser'
+
 export const UserButton = () => {
-  const user = null
+  const user = useUser()
 
   return (
     <DropdownMenu>
@@ -19,11 +21,7 @@ export const UserButton = () => {
         <button className='group'>
           {user && (
             <div className='relative h-[48px] w-[48px] rounded-[24px] group-hover:rounded-[16px] transition-all overflow-hidden'>
-              <Image
-                fill
-                src='https://www.matichon.co.th/wp-content/uploads/2023/03/338284396_2204472996406467_3660489073419004986_n-1024x1024.jpg'
-                alt='user'
-              />
+              <Image fill src={user.photoURL!} alt='user' />
             </div>
           )}
           {!user && (
@@ -37,8 +35,11 @@ export const UserButton = () => {
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent side='right' align='center'>
-        <DropdownMenuItem className='cursor-pointer'>
-          <p className='capitalize font-semibold text-sm'>sign out</p>
+        <DropdownMenuItem className='cursor-pointer' asChild>
+          <div className='flex items-center text-rose-500'>
+            <p className='capitalize font-semibold text-sm'>sign out</p>
+            <LogOut size={15} className='ml-auto' />
+          </div>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
