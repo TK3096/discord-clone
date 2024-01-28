@@ -2,6 +2,9 @@
 
 import Image from 'next/image'
 import { UserRound, LogOut } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+
+import { useUser } from '@/hooks/useUser'
 
 import {
   DropdownMenu,
@@ -10,10 +13,19 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-import { useUser } from '@/hooks/useUser'
+import { signOut } from '@/lib/firebase/auth'
 
 export const UserButton = () => {
   const user = useUser()
+  const router = useRouter()
+
+  const handleSignout = async () => {
+    const r = await signOut()
+
+    if (r) {
+      router.push('/')
+    }
+  }
 
   return (
     <DropdownMenu>
@@ -35,7 +47,11 @@ export const UserButton = () => {
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent side='right' align='center'>
-        <DropdownMenuItem className='cursor-pointer' asChild>
+        <DropdownMenuItem
+          className='cursor-pointer'
+          asChild
+          onClick={handleSignout}
+        >
           <div className='flex items-center text-rose-500'>
             <p className='capitalize font-semibold text-sm'>sign out</p>
             <LogOut size={15} className='ml-auto' />
