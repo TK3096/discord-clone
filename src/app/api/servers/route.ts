@@ -36,7 +36,7 @@ export const POST = async (request: NextRequest) => {
         success: false,
         error: 'Profile not found.',
       },
-      { status: 404 },
+      { status: 401 },
     )
   }
 
