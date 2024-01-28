@@ -6,6 +6,7 @@ import { CreateServerModal } from '@/components/modal/CreateServerModal'
 import { InviteModal } from '@/components/modal/InviteModal'
 import { EditServerModal } from '@/components/modal/EditServerModal'
 import { MemberModal } from '@/components/modal/MemberModal'
+import { LeaveServerModal } from '@/components/modal/LeaveServerModal'
 
 export const ModalProvider = () => {
   const [mounted, setMounted] = useState(false)
@@ -22,6 +23,7 @@ export const ModalProvider = () => {
       <InviteModal />
       <EditServerModal />
       <MemberModal />
+      <LeaveServerModal />
     </>
   )
 }
