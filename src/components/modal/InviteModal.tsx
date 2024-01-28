@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Check, Copy } from 'lucide-react'
 import { Server } from '@prisma/client'
@@ -20,6 +21,8 @@ import { useOrigin } from '@/hooks/useOrigin'
 import { APIResponse } from '@/types'
 
 export const InviteModal = () => {
+  const router = useRouter()
+
   const [copied, setCopied] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -53,6 +56,7 @@ export const InviteModal = () => {
       const resBody = (await response.json()) as unknown as APIResponse<Server>
 
       if (response.ok && resBody.success) {
+        router.refresh()
         onOpen('invite', { server: resBody.data })
       } else {
         console.log(resBody)

@@ -3,6 +3,8 @@ import { redirect } from 'next/navigation'
 import { ServerHeader } from '@/components/server/ServerHeader'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { SearverSearch } from '@/components/server/ServerSearch'
+import { Separator } from '@/components/ui/separator'
+import { ServerSection } from '@/components/server/ServerSection'
 
 import { getServer } from '@/actions/server'
 import { getCurrentProfile } from '@/actions/profile'
@@ -31,6 +33,10 @@ export const ServerSidebar = async (props: ServerSidebarProps) => {
       <ScrollArea className='flex-1 px-3'>
         <div className='mt-2'>
           <SearverSearch />
+        </div>
+        <Separator className='bg-zinc-200 dark:bg-zinc-700 rounded-md my-2' />
+        <div>
+          <ServerSection />
         </div>
       </ScrollArea>
     </div>
