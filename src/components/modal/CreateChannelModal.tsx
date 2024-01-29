@@ -2,6 +2,7 @@
 
 import qs from 'query-string'
 import * as z from 'zod'
+import { useEffect } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Server, ChannelType } from '@prisma/client'
@@ -52,14 +53,16 @@ export const CreateChannelModal = () => {
   const params = useParams()
   const router = useRouter()
 
+  const { onClose, type, open, data } = useModal()
+  const { channelType } = data
+
   const form = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
       name: '',
-      type: ChannelType.TEXT,
+      type: channelType || ChannelType.TEXT,
     },
   })
-  const { onClose, type, open, data } = useModal()
 
   const isOpen = open && type === 'createChannel'
   const loading = form.formState.isSubmitting
@@ -99,6 +102,12 @@ export const CreateChannelModal = () => {
     form.reset()
     onClose()
   }
+
+  useEffect(() => {
+    if (channelType) {
+      form.setValue('type', channelType)
+    }
+  }, [channelType, form])
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>

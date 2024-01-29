@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { Search } from 'lucide-react'
+import { useRouter, useParams } from 'next/navigation'
 
 import {
   CommandDialog,
@@ -12,14 +13,46 @@ import {
   CommandList,
 } from '@/components/ui/command'
 
-export const SearverSearch = () => {
+interface ServerSearchProps {
+  data: {
+    label: string
+    type: 'channel' | 'member'
+    data?: {
+      icon: React.ReactNode
+      name: string
+      id: string
+    }[]
+  }[]
+}
+
+export const SearverSearch = (props: ServerSearchProps) => {
+  const { data } = props
+
+  const router = useRouter()
+  const params = useParams()
+
   const [open, setOpen] = useState(false)
 
   const handleClick = () => {
     setOpen(true)
   }
 
-  const handleClickItem = () => {}
+  const handleClickItem = (value: {
+    id: string
+    type: 'channel' | 'member'
+  }) => {
+    const { type, id } = value
+
+    setOpen(false)
+
+    if (type === 'member') {
+      router.push(`/conversations/${id}`)
+    }
+
+    if (type === 'channel') {
+      router.push(`/servers/${params?.serverId}/channels/${id}`)
+    }
+  }
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -51,9 +84,30 @@ export const SearverSearch = () => {
         </kbd>
       </button>
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput />
+        <CommandInput placeholder='Search all channels and members' />
         <CommandList>
           <CommandEmpty>No Results Found</CommandEmpty>
+          {data.map(({ label, type, data }) => {
+            if (!data?.length) {
+              return null
+            }
+
+            return (
+              <CommandGroup key={label} heading={label}>
+                {data?.map(({ id, icon, name }) => {
+                  return (
+                    <CommandItem
+                      key={id}
+                      onSelect={() => handleClickItem({ id, type })}
+                    >
+                      {icon}
+                      <span>{name}</span>
+                    </CommandItem>
+                  )
+                })}
+              </CommandGroup>
+            )
+          })}
         </CommandList>
       </CommandDialog>
     </>
