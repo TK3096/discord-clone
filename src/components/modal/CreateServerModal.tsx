@@ -74,6 +74,7 @@ export const CreateServerModal = (props: CreateServerModalProps) => {
 
       if (response.ok && resBody.success) {
         router.refresh()
+        handleClose()
       } else {
         console.log(resBody)
       }

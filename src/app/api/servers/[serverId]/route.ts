@@ -47,3 +47,36 @@ export const PATCH = async (
     data: server,
   })
 }
+
+export const DELETE = async (
+  request: NextRequest,
+  { params }: { params: { serverId: string } },
+) => {
+  const profile = await getCurrentProfile()
+
+  if (!profile) {
+    return NextResponse.json<APIResponse>(
+      { success: false, error: 'Profile not found.' },
+      { status: 401 },
+    )
+  }
+
+  if (!params.serverId) {
+    return NextResponse.json<APIResponse>(
+      { success: false, error: 'Server id missing.' },
+      { status: 400 },
+    )
+  }
+
+  const server = await db.server.delete({
+    where: {
+      id: params.serverId,
+      profileId: profile.id,
+    },
+  })
+
+  return NextResponse.json<APIResponse<Server>>({
+    success: true,
+    data: server,
+  })
+}
