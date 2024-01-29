@@ -60,12 +60,14 @@ export const LeaveServerModal = () => {
           <DialogTitle className='font-bold text-2xl text-center'>
             Leave Server
           </DialogTitle>
+          <DialogDescription className='text-center text-zinc-500'>
+            Are you sure want to leave{' '}
+            <span className='font-semibold text-indigo-500'>
+              {server?.name}
+            </span>{' '}
+            ?
+          </DialogDescription>
         </DialogHeader>
-        <DialogDescription className='text-center text-zinc-500'>
-          Are you sure want to leave{' '}
-          <span className='font-semibold text-indigo-500'>{server?.name}</span>{' '}
-          ?
-        </DialogDescription>
         <DialogFooter className='bg-gray-100 px-6 py-4'>
           <div className='flex items-center justify-between w-full'>
             <Button variant='ghost' disabled={loading} onClick={onClose}>
