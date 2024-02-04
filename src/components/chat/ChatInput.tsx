@@ -4,6 +4,8 @@ import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Plus } from 'lucide-react'
+import qs from 'query-string'
+import { useRouter } from 'next/navigation'
 
 import { Form, FormField, FormItem, FormControl } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
@@ -16,10 +18,14 @@ const schema = z.object({
 interface ChatInputProps {
   type: 'channel' | 'conversation'
   name: string
+  apiUrl: string
+  query: Record<string, any>
 }
 
 export const ChatInput = (props: ChatInputProps) => {
-  const { type, name } = props
+  const { type, name, apiUrl, query } = props
+
+  const router = useRouter()
 
   const form = useForm({
     resolver: zodResolver(schema),
@@ -30,8 +36,26 @@ export const ChatInput = (props: ChatInputProps) => {
 
   const loading = form.formState.isSubmitting
 
-  const handleSubmitForm = (values: z.infer<typeof schema>) => {
-    console.log(values)
+  const handleSubmitForm = async (values: z.infer<typeof schema>) => {
+    try {
+      const url = qs.stringifyUrl({
+        url: apiUrl,
+        query,
+      })
+
+      await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      })
+
+      form.reset()
+      router.refresh()
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (

@@ -22,6 +22,7 @@ const getSession = async () => {
   try {
     return cookies().get(SESSION_KEY)?.value
   } catch (error) {
+    console.log(error)
     return undefined
   }
 }
@@ -68,4 +69,19 @@ export const revokeAllSessions = async (session: string) => {
   const decodedIdToken = await auth.verifySessionCookie(session)
 
   return await auth.revokeRefreshTokens(decodedIdToken.uid)
+}
+
+export const getCurrentUserPages = async (
+  cookies: Partial<{ [key: string]: string }>,
+) => {
+  const session = cookies[SESSION_KEY]
+
+  if (!(await isUserAuthenticated(session))) {
+    return null
+  }
+
+  const decodedIdToken = await auth.verifySessionCookie(session!)
+  const currentUser = await auth.getUser(decodedIdToken.uid)
+
+  return currentUser
 }
