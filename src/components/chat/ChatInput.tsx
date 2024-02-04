@@ -9,7 +9,9 @@ import { useRouter } from 'next/navigation'
 
 import { Form, FormField, FormItem, FormControl } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { EmojiPicker } from './EmojiPicker'
+import { EmojiPicker } from '@/components/chat/EmojiPicker'
+
+import { useModal } from '@/hooks/useModal'
 
 const schema = z.object({
   content: z.string().min(1),
@@ -26,6 +28,8 @@ export const ChatInput = (props: ChatInputProps) => {
   const { type, name, apiUrl, query } = props
 
   const router = useRouter()
+
+  const { onOpen } = useModal()
 
   const form = useForm({
     resolver: zodResolver(schema),
@@ -70,6 +74,7 @@ export const ChatInput = (props: ChatInputProps) => {
                 <div className='relative p-5 pb-6'>
                   <button
                     type='button'
+                    onClick={() => onOpen('messageFile', { apiUrl, query })}
                     className='absolute top-8 left-8 h-[24px] w-[24px] bg-zinc-500 dark:bg-zinc-400 hover:bg-zinc-600 dark:hover:bg-zinc-300 transition rounded-full p-1 flex items-center justify-center'
                   >
                     <Plus className='text-white dark:text-[#313338]' />
