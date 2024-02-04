@@ -21,6 +21,8 @@ import { ActionTooltip } from '@/components/common/ActionTooltip'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 
+import { useModal } from '@/hooks/useModal'
+
 import { cn } from '@/lib/utils'
 
 interface ChatItemProps {
@@ -66,7 +68,8 @@ export const ChatItem = (props: ChatItemProps) => {
     socketUrl,
   } = props
   const [isEditing, setIsEditing] = useState(false)
-  const [isDeleting, setIsDeleting] = useState(false)
+
+  const { onOpen } = useModal()
 
   const form = useForm({
     resolver: zodResolver(schema),
@@ -107,6 +110,13 @@ export const ChatItem = (props: ChatItemProps) => {
     } catch (error) {
       console.log(error)
     }
+  }
+
+  const handleDelete = () => {
+    onOpen('deleteMessage', {
+      apiUrl: `${socketUrl}/${id}`,
+      query: socketQuery,
+    })
   }
 
   useEffect(() => {
@@ -242,7 +252,7 @@ export const ChatItem = (props: ChatItemProps) => {
           <ActionTooltip label='Delete'>
             <Trash
               className='cursor-pointer ml-auto w-4 h-4 text-zinc-500 hover:text-zinc-600 dark:hover:text-zinc-300 transition'
-              onClick={() => setIsEditing(true)}
+              onClick={handleDelete}
             />
           </ActionTooltip>
         </div>
