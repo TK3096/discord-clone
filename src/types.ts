@@ -24,3 +24,8 @@ export type NextApiResponseServerIO = NextApiResponse & {
     }
   }
 }
+
+export type MessagesWithNextCursor = {
+  items: Message[]
+  nextCursor: string | null
+}

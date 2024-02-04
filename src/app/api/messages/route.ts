@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Message } from '@prisma/client'
 
-import { APIResponse } from '@/types'
+import { APIResponse, MessagesWithNextCursor } from '@/types'
 
 import { db } from '@/lib/db'
 
@@ -84,8 +84,8 @@ export const GET = async (request: NextRequest) => {
     nextCursor = messages[MESSAGE_LIMIT - 1].id
   }
 
-  return NextResponse.json<APIResponse<Message[]>>({
-    success: true,
-    data: messages,
+  return NextResponse.json<MessagesWithNextCursor>({
+    items: messages,
+    nextCursor,
   })
 }
