@@ -7,6 +7,7 @@ import { ChatInput } from '@/components/chat/ChatInput'
 
 import { getCurrentProfile } from '@/actions/profile'
 import { getChannelById } from '@/actions/channel'
+import { getMemberByServerId } from '@/actions/member'
 
 interface ChannelIdPageProps {
   params: {
@@ -25,6 +26,12 @@ const ChannelIdPage = async (props: ChannelIdPageProps) => {
     redirect('/')
   }
 
+  const member = await getMemberByServerId(params.serverId, profile.id)
+
+  if (!member) {
+    redirect('/')
+  }
+
   return (
     <div className='bg-white dark:bg-[#313338] h-full flex flex-col'>
       <ChatHeader
@@ -34,7 +41,20 @@ const ChannelIdPage = async (props: ChannelIdPageProps) => {
       />
       {channel.type === ChannelType.TEXT && (
         <>
-          <ChatMessages />
+          <ChatMessages
+            member={member}
+            name={channel.name}
+            chatId={channel.id}
+            type='channel'
+            apiUrl='/api/messages'
+            socketUrl='/api/socket/messages'
+            socketQuery={{
+              channelId: channel.id,
+              serverId: channel.serverId,
+            }}
+            paramKey='channelId'
+            paramValue={channel.id}
+          />
           <ChatInput
             type='channel'
             name={channel.name}

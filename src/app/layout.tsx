@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils'
 
 import { ModalProvider } from '@/providers/ModalProvider'
 import { SocketProvider } from '@/providers/SocketProvider'
+import { QueryProvider } from '@/providers/QueryProvider'
 
 import './globals.css'
 
@@ -25,16 +26,16 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body className={cn(font.className, 'bg-white dark:bg-[#313338]')}>
-        <SocketProvider>
-          <ThemeProvider
-            attribute='class'
-            defaultTheme='dark'
-            storageKey='discord-clone'
-          >
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='dark'
+          storageKey='discord-clone'
+        >
+          <SocketProvider>
             <ModalProvider />
-            {children}
-          </ThemeProvider>
-        </SocketProvider>
+            <QueryProvider>{children}</QueryProvider>
+          </SocketProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

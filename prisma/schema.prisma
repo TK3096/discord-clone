@@ -15,7 +15,7 @@ model Profile {
   imageUrl String @db.Text
 
   servers Server[]
-  memebers Member[]
+  members Member[]
   channels Channel[]
   conversationsInitiated Conversation[] @relation("ProfileOne")
   conversationsReceived Conversation[] @relation("ProfileTwo")
@@ -100,8 +100,8 @@ model Message {
   channelId String
   channel Channel @relation(fields: [channelId], references: [id], onDelete: Cascade)
 
-  memeberId String
-  memeber Member @relation(fields: [memeberId], references: [id], onDelete: Cascade)
+  memberId String
+  member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
 
   deleted Boolean @default(false)
 
@@ -109,7 +109,7 @@ model Message {
   updatedAt DateTime @updatedAt
 
   @@index([channelId])
-  @@index([memeberId])
+  @@index([memberId])
 }
 
 model Conversation {

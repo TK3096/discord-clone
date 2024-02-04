@@ -73,10 +73,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponseServerIO) => {
         content,
         fileUrl,
         channelId: channelId as string,
-        memeberId: member.id,
+        memberId: member.id,
       },
       include: {
-        memeber: {
+        member: {
           include: {
             profile: true,
           },
