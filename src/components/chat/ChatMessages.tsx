@@ -76,7 +76,7 @@ export const ChatMessages = (props: ChatMessagesProps) => {
             {group.data.map((message: MessageWithMemberWithProfile) => (
               <ChatItem
                 key={message.id}
-                id={member.id}
+                id={message.id}
                 currentMember={member}
                 member={message.member}
                 content={message.content}

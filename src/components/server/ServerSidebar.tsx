@@ -89,7 +89,7 @@ export const ServerSidebar = async (props: ServerSidebarProps) => {
           />
         </div>
         <Separator className='bg-zinc-200 dark:bg-zinc-700 rounded-md my-2' />
-        {textChannels.length && (
+        {textChannels.length > 0 && (
           <div className='mb-2'>
             <ServerSection
               channelType={ChannelType.TEXT}
@@ -108,7 +108,7 @@ export const ServerSidebar = async (props: ServerSidebarProps) => {
             </div>
           </div>
         )}
-        {audioChannels.length && (
+        {audioChannels.length > 0 && (
           <div className='mb-2'>
             <ServerSection
               channelType={ChannelType.AUDIO}

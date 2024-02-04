@@ -91,7 +91,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponseServerIO) => {
   } catch (error) {
     console.log('[MESSAGE_POST] ', error)
 
-    return res
+    return res.status(500).json({ message: 'Internal Error' })
   }
 }
 
