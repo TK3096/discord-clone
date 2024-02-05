@@ -46,7 +46,7 @@ export const SearverSearch = (props: ServerSearchProps) => {
     setOpen(false)
 
     if (type === 'member') {
-      router.push(`/main/conversations/${id}`)
+      // router.push(`/main/conversations/${id}`)
     }
 
     if (type === 'channel') {

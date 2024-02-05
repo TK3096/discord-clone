@@ -97,7 +97,7 @@ export const ChatItem = (props: ChatItemProps) => {
       return
     }
 
-    router.push(`/main/conversations/${member.id}`)
+    // router.push(`/main/conversations/${member.id}`)
   }
 
   const handleSubmitEdit = async (values: z.infer<typeof schema>) => {

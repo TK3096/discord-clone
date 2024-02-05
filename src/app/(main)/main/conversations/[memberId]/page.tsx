@@ -23,11 +23,11 @@ const MemberIdPage = async (props: MemberIdPageProps) => {
 
   return (
     <div className='bg-white dark:bg-[#313338] h-full flex flex-col'>
-      <ChatHeader
+      {/* <ChatHeader
         type='conversation'
         name={anotherProfile.name}
         imageUrl={anotherProfile.imageUrl}
-      />
+      /> */}
     </div>
   )
 }

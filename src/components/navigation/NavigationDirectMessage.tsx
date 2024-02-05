@@ -9,7 +9,7 @@ export const NavigationDirectMessage = () => {
   const router = useRouter()
 
   const handleClick = () => {
-    router.push('/main/conversations')
+    // router.push('/main/conversations')
   }
 
   return (

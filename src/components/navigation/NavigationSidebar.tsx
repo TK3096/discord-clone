@@ -22,8 +22,8 @@ export const NavigationSidebar = async () => {
 
   return (
     <div className='w-full h-full flex flex-col gap-4 items-center bg-[#E3E5E8] dark:bg-[#1E1F22] py-3'>
-      <NavigationDirectMessage />
-      <Separator className='h-[2px] rounded-md bg-zinc-300 dark:bg-zinc-700 w-10 mx-auto' />
+      {/* <NavigationDirectMessage /> */}
+      {/* <Separator className='h-[2px] rounded-md bg-zinc-300 dark:bg-zinc-700 w-10 mx-auto' /> */}
       <CreateServerButton />
       <Separator className='h-[2px] rounded-md bg-zinc-300 dark:bg-zinc-700 w-10 mx-auto' />
       <ScrollArea className='flex-1 w-full'>
