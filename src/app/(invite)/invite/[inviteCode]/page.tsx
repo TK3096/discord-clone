@@ -22,13 +22,13 @@ const InvitePage = async (props: InvitePageProps) => {
   const existingServer = await existingOnServer(params.inviteCode, profile.id)
 
   if (existingServer) {
-    redirect(`/servers/${existingServer.id}`)
+    redirect(`/main/servers/${existingServer.id}`)
   }
 
   const server = await joinServer(params.inviteCode, profile.id)
 
   if (server) {
-    redirect(`/servers/${server.id}`)
+    redirect(`/main/servers/${server.id}`)
   }
 
   return (

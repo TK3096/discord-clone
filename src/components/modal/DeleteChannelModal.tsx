@@ -50,7 +50,7 @@ export const DeleteChannelModal = () => {
       if (response.ok && resBody.success) {
         onClose()
         router.refresh()
-        router.push(`/servers/${server?.id}`)
+        router.push(`/main/servers/${server?.id}`)
       } else {
         console.log(resBody)
       }

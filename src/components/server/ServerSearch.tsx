@@ -46,11 +46,11 @@ export const SearverSearch = (props: ServerSearchProps) => {
     setOpen(false)
 
     if (type === 'member') {
-      router.push(`/conversations/${id}`)
+      router.push(`/main/conversations/${id}`)
     }
 
     if (type === 'channel') {
-      router.push(`/servers/${params?.serverId}/channels/${id}`)
+      router.push(`/main/servers/${params?.serverId}/channels/${id}`)
     }
   }
 

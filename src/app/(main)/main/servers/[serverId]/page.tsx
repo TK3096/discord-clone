@@ -22,7 +22,7 @@ const ServerPageIdPage = async (props: ServerPageIdPageProps) => {
     return null
   }
 
-  return redirect(`/servers/${params.serverId}/channels/${channel.id}`)
+  return redirect(`/main/servers/${params.serverId}/channels/${channel.id}`)
 }
 
 export default ServerPageIdPage

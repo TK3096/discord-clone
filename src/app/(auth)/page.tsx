@@ -16,7 +16,7 @@ const HomePage = async () => {
   }
 
   if (isAuthenticated && profile) {
-    redirect(`/servers/${profile.servers[0].id}`)
+    redirect(`/main/servers/${profile.servers[0].id}`)
   }
 
   return (

@@ -18,3 +18,17 @@ export const getCurrentProfile = async () => {
 
   return profile
 }
+
+export const getProfileByMemberId = async (memberId: string) => {
+  const profile = await db.profile.findFirst({
+    where: {
+      members: {
+        some: {
+          id: memberId,
+        },
+      },
+    },
+  })
+
+  return profile
+}

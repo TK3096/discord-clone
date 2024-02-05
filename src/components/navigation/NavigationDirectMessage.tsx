@@ -1,11 +1,16 @@
 'use client'
 
 import { FaDiscord } from 'react-icons/fa6'
+import { useRouter } from 'next/navigation'
 
 import { ActionTooltip } from '@/components/common/ActionTooltip'
 
 export const NavigationDirectMessage = () => {
-  const handleClick = () => {}
+  const router = useRouter()
+
+  const handleClick = () => {
+    router.push('/main/conversations')
+  }
 
   return (
     <ActionTooltip side='right' align='center' label='direct messages'>

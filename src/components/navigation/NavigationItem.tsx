@@ -20,7 +20,7 @@ export const Navigationitem = (props: NavigationItemProps) => {
   const params = useParams()
 
   const handleClick = () => {
-    router.push(`/servers/${id}`)
+    router.push(`/main/servers/${id}`)
   }
 
   return (

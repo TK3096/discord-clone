@@ -8,7 +8,7 @@ import Image from 'next/image'
 import { Member, Profile, RoleMember } from '@prisma/client'
 import { Edit, FileIcon, ShieldAlert, ShieldCheck, Trash } from 'lucide-react'
 import qs from 'query-string'
-import { useRouter, useParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 import {
   Form,
@@ -70,7 +70,6 @@ export const ChatItem = (props: ChatItemProps) => {
   } = props
 
   const router = useRouter()
-  const params = useParams()
 
   const [isEditing, setIsEditing] = useState(false)
 
@@ -98,7 +97,7 @@ export const ChatItem = (props: ChatItemProps) => {
       return
     }
 
-    router.push(`/servers/${params?.serverId}/conversations/${member.id}`)
+    router.push(`/main/conversations/${member.id}`)
   }
 
   const handleSubmitEdit = async (values: z.infer<typeof schema>) => {
